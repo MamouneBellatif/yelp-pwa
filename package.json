@@ -4,9 +4,8 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "export NODE_OPTIONS=--openssl-legacy-provider && expo start --web",
-    "predeploy": "expo export:web",
-    "deploy-hosting": "npm run predeploy && firebase deploy --only hosting"
+    "web-config": "export NODE_OPTIONS=--openssl-legacy-provider",
+    "deploy": "expo export:web"
   },
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",

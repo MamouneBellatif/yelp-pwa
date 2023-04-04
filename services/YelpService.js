@@ -11,23 +11,7 @@ const YelpService = axios.create({
     },
 });
 
-//axios allo origin
 YelpService.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-//axios expect json
 YelpService.defaults.headers.common['Accept'] = 'application/json';
-
-
-// resolve cors issue
-// const YelpService = axios.create({ baseURL: baseUrl });
-// YelpService.interceptors.request.use(
-//   async (config) => {
-//     config.headers.Authorization = `Bearer ${apiKey}`;
-//     return config;
-//   },
-//   (error) => {
-//     return Promise.reject(error);
-//   },
-// );
-
 
 export default YelpService;

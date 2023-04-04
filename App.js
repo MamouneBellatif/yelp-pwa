@@ -6,12 +6,14 @@ import SearchScreen from './components/Search';
 import ResultsScreen from './components/Result';
 import RestaurantDetailsScreen from './components/RestaurantDetails'
 import Toast from 'react-native-toast-message';
+import CommentComponent from './components/comments';
 
 const Stack = createStackNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
+    <CommentComponent />
       <Stack.Navigator initialRouteName="Search">
         <Stack.Screen name="Search" component={SearchScreen} options={{ title: 'Recherche' }} />
         <Stack.Screen name="Results" component={ResultsScreen} options={{ title: 'Résultats' }} />
