@@ -3,7 +3,7 @@ import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import axios from 'axios';
 import WorkerServicePost from '../services/WorkerService';
 import WorkerServiceGet from '../services/WorkerGet';
-import { FlatList } from 'react-native-gesture-handler';
+import { FlatList, ScrollView } from 'react-native-gesture-handler';
 const CommentComponent = () => {
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState('');
@@ -21,8 +21,13 @@ const CommentComponent = () => {
        
                 const response = WorkerServiceGet.get('/comments').then((response) => {
                     console.log(response.data);
+                    // get max 10 comments
+                    if (response.data.length > 5) {
+                        response.data = response.data.slice(response.data.length - 5, response.data.length);
+                    }
                     setComments(response.data);
                 });
+
 
 
     }, []);
@@ -46,24 +51,15 @@ const CommentComponent = () => {
     }).then((response) => {
 
         setComments([...comments, comment]);
+        //limit the number of comments to 5
+        if (comments.length > 5) {
+            comments.shift();
+        }
         setComment('');
     }).catch((error) => {
         console.error('Error fetching data from Cloudflare Workers API:', error);
     });}
     
-       /* try {
-                const response = await WorkerServicePost.post('/comments',JSON.stringify({
-                                content: comment
-                            }));
-                            
-                            setComments([...comments, comment]);
-                            setComment('');
-                } catch (error) {
-                    console.error('Error fetching data from Cloudflare Workers API:', error);
-                }
-            };*/
-
-
 
 //iterate on comments array and display them in a list (the format is id: "comment")
 
@@ -71,13 +67,17 @@ const CommentComponent = () => {
         return ( 
             <View style={styles.container}>
             <Text style={styles.heading}>Livre d'or</Text>
+            <ScrollView style={styles.container}>
             <FlatList
                 data={comments}
                 keyExtractor={(k,v) => v}
                 renderItem={({item}) => {
-                    return <Text>anonyme: {item}</Text>
+                    return <View style={styles.item} >
+                    <Text>anonyme: {item}</Text>
+                    </View>
                 }}
             />
+            </ScrollView>
             <Text style={styles.heading}>Add a comment</Text>
             <View style={styles.container}>
                     <TextInput
@@ -86,7 +86,8 @@ const CommentComponent = () => {
                         value={comment}
                         onChangeText={setComment} />
                     <Button style={styles.button} title="Submit" onPress={handleSubmit} />
-                </View></View>
+                </View>
+                </View>
         );
     };
 
@@ -124,6 +125,13 @@ const CommentComponent = () => {
             backgroundColor: 'blue',
             color: '#fff',
             padding: 10
+        },
+        item: {
+            backgroundColor: 'lightgray',
+            padding: 6,
+            marginVertical: 2,
+            marginHorizontal: 16,
+            borderRadius: 4,
         }
     });
     export default CommentComponent;
