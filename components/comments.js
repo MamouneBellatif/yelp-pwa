@@ -7,19 +7,13 @@ import { FlatList, ScrollView } from 'react-native-gesture-handler';
 const CommentComponent = () => {
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState('');
-    const commentWorker = 'https://api-livre.bellatif6169.workers.dev/comments';
-    const fetchComments = () => {
-      const response = WorkerServiceGet.get('/comments').then((response) => {
-                    console.log(response.data);
-                    setComments(response.data);
-                });
-    }
+
     useEffect(() =>{
 
         //use workerservice.js to fetch comments with axios
 
        
-                const response = WorkerServiceGet.get('/comments').then((response) => {
+                const response = WorkerServiceGet.get('/comments/').then((response) => {
                     console.log(response.data);
                     // get max 10 comments
                     if (response.data.length > 5) {
@@ -34,7 +28,7 @@ const CommentComponent = () => {
 
     const handleSubmit = async  () => {
 
-    fetch('https://api-livre.bellatif6169.workers.dev/comments', {
+    fetch('https://api-livre.bellatif6169.workers.dev/comments/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
