@@ -16,19 +16,14 @@ const baseUrl = 'https://api.yelp.com/v3/businesses';
 //translating the axios instance to fetch
 const YelpService = {
       get: async (url, params) => {
-
-        const response = await fetch(proxyurl + baseUrl , {
+        let getParams = `?term=${params.params.term}&location=${params.params.location}`;
+        const response = await fetch(proxyurl + baseUrl + url + getParams,{
           method: 'GET',
           headers: {
-            Authorization: `Bearer ${apiKey}`,
-            accept: 'application/json',
-            'Content-Type': 'application/json',
-            accessControlAllowOrigin: '*',
-            'Access-Control-Allow-Credentials': true,
-            withCredentials: true,
+            'Authorization': `Bearer ${apiKey}`,
           },
         });
-        return response.json();
+        return JSON.parse(await response.text());
 
     }
 

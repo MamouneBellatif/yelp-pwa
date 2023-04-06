@@ -12,7 +12,7 @@ const SearchScreen = ({ navigation }) => {
   const handleSearch = async () => {
     console.log("resto", restaurant);
     try {
-      const response = await YelpService.get('/search', {
+      const response = await YelpService.get(`/search`, {
         params: {
           term: restaurant,
           location: location,
@@ -21,7 +21,7 @@ const SearchScreen = ({ navigation }) => {
 
 
 
-      navigation.navigate('Results', { results: response.data.businesses });
+      navigation.navigate('Results', { results: response['businesses'] });
     } catch (error) {
       setErreur(true);
         Toast.show({
