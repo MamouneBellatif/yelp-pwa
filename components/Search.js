@@ -4,7 +4,7 @@ import { View, TextInput, Button, Text, StyleSheet } from 'react-native';
 import YelpService from "../services/YelpService";
 import Toast from 'react-native-toast-message';
 
-    
+
 const SearchScreen = ({ navigation }) => {
   const [restaurant, setRestaurant] = useState('');
   const [location, setLocation] = useState('');
@@ -18,7 +18,9 @@ const SearchScreen = ({ navigation }) => {
           location: location,
         },
       });
-      
+
+
+
       navigation.navigate('Results', { results: response.data.businesses });
     } catch (error) {
       setErreur(true);
